@@ -1,30 +1,41 @@
 services:
+  ms-usuarios:
+    build: ./ms-usuarios
+    container_name: cnt-ms-usuarios
+    ports:
+      - "8080:8081"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://cnt-db-rednorte:3306/db_usuarios
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=11223344
+    depends_on:
+      db-rednorte:
+        condition: service_healthy
   ms-reasignacion:
     build: ./ms-reasignacion
     container_name: cnt-ms-reasignacion
     ports:
-      - "8082:8081" # Acceso externo por 8082, interno 8081
+      - "8082:8081"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db-ms-reasignacion:3306/db_reasignacion
+      - SPRING_DATASOURCE_URL=jdbc:mysql://cnt-db-rednorte:3306/db_reasignacion
       - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=rednorte88
+      - SPRING_DATASOURCE_PASSWORD=11223344
     depends_on:
-      db-ms-reasignacion:
+      db-rednorte:
         condition: service_healthy
-
-  # FALTA AGREGAR EL OTRO SERVICIO AQUÍ PARA QUE LA URL DOCKER FUNCIONE
-  ms-lista-espera:
-    build: ./ms-lista-espera
-    container_name: ms-lista-espera # Este nombre usa el Service en su URL
-    ports:
-      - "8081:8081"
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db-ms-reasignacion:3306/db_lista_espera
-    depends_on:
-      db-ms-reasignacion:
-        condition: service_healthy
-
-  db-ms-reasignacion:
+  db-rednorte:
     image: mysql:8.4
-    container_name: cnt-db-reasignacion
-    # ... resto de tu configuración de salud y volúmenes
+    container_name: cnt-db-rednorte
+    environment:
+      - MYSQL_ROOT_PASSWORD=11223344
+    ports:
+      - "3307:3306"
+    volumes:
+      - vol_usuarios_data:/var/lib/mysql
+      - ./init-db:/docker-entrypoint-initdb.d 
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-p11223344"]
+      interval: 10s
+      retries: 5
+volumes:
+  vol_usuarios_data:
