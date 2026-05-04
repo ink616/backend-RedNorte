@@ -6,13 +6,11 @@
 package com.rednorte.Backend_reasignacion.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import com.rednorte.Backend_reasignacion.model.ReasignacionLog;
 
-/**
- *
- * @author Baryonyx
- */
+@Repository
 public interface ReasignacionRepository extends JpaRepository<ReasignacionLog, Long>{
 
 }

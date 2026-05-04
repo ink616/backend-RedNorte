@@ -10,10 +10,6 @@ import org.springframework.stereotype.Repository;
 import com.rednorte.Backend_reasignacion.model.BloquesAgenda;
 
 
-/**
- *
- * @author Baryonyx
- */
 @Repository
 public interface BloquesAgendaRepository extends JpaRepository<BloquesAgenda, Long> {
 

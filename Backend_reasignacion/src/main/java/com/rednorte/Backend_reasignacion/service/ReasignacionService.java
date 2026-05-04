@@ -39,10 +39,6 @@ public class ReasignacionService {
         return cancelacionRepository.save(cancelacion);
     }
 
-    /**
-     * SOLICITUD 2: Procesa la reasignación buscando un nuevo paciente via
-     * Docker.
-     */
     @Transactional
     public void ejecutarReasignacion(Cancelacion cancelacion) {
         // COMUNICACIÓN DOCKER: 'ms-lista-espera' es el nombre del servicio en docker-compose

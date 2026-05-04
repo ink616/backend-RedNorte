@@ -10,10 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.rednorte.Backend_reasignacion.model.Cancelacion;
 
-/**
- *
- * @author Baryonyx
- */
+
 @Repository
 public interface  CancelacionRepository extends JpaRepository<Cancelacion, Long>{
 
